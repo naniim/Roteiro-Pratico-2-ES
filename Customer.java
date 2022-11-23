@@ -16,18 +16,11 @@ public class Customer {
    public String getName (){
       return _name;
    }
-  
-  public String statement() {
-     double totalAmount = 0;
-     int frequentRenterPoints = 0;
-     Enumeration rentals = _rentals.elements();
-     String result = "Rental Record for " + getName() + "\n";
-     while (rentals.hasMoreElements()) {
-        double thisAmount = 0;
-        Rental each = (Rental) rentals.nextElement();
 
-        //determine amounts for each line
-        switch (each.getMovie().getPriceCode()) {
+   private double amountFor(Rental each) {
+      //Adicionar o trecho de código extraído.
+        double thisAmount = 0;
+      switch (each.getMovie().getPriceCode()) {
            case Movie.REGULAR:
               thisAmount += 2;
               if (each.getDaysRented() > 2)
@@ -42,7 +35,19 @@ public class Customer {
                  thisAmount += (each.getDaysRented() - 3) * 1.5;
                break;
         }
-
+        return thisAmount;
+   }
+  
+  public String statement() {
+     double totalAmount = 0;
+     int frequentRenterPoints = 0;
+     Enumeration rentals = _rentals.elements();
+     String result = "Rental Record for " + getName() + "\n";
+     while (rentals.hasMoreElements()) {
+        double thisAmount = 0;
+        Rental each = (Rental) rentals.nextElement();
+        //determine amounts for each line
+        thisAmount = amountFor(each);
         // add frequent renter points
         frequentRenterPoints ++;
         // add bonus for a two day new release rental
