@@ -7,7 +7,8 @@ public class HtmlStatement extends Statement {
         "</EM></H1><P>\n";
     }
     
-    public String resultado_rental(Rental each){
+    public String resultado_rental(Enumeration rentals){
+        Rental each = (Rental) rentals.nextElement();
         return each.getMovie().getTitle()+ ": " +
         String.valueOf(each.getCharge()) + "<BR>\n";
     }
@@ -23,17 +24,4 @@ public class HtmlStatement extends Statement {
         "</EM> frequent renter points<P>";
     }
 
-    public String value(Customer aCustomer) {
-        Enumeration rentals = aCustomer.getRentals();
-        String result = resultado_customer(aCustomer);
-        while (rentals.hasMoreElements()) {
-           Rental each = (Rental) rentals.nextElement();
-           //show figures for each rental
-           result += resultado_rental(each);
-        }
-        //add footer lines
-        result += resultado_ow(aCustomer);
-        result += resultado_earned(aCustomer);
-        return result;
-     }
 }
